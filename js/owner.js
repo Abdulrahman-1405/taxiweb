@@ -6,20 +6,14 @@
  */
 
 // Auth guard - runs immediately, before DOM is ready, to bounce unauthenticated
-// visitors to the login page as fast as possible.
-if (window.TaxiDB && !window.TaxiDB.isLoggedIn()) {
-  window.location.href = 'owner-login.html';
-}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.TaxiDB) {
     console.error('Database module (db.js) not found!');
     return;
   }
-  if (!window.TaxiDB.isLoggedIn()) {
-    window.location.href = 'owner-login.html';
-    return;
-  }
+  
 
   // Dashboard State
   let currentFilter = 'all';
