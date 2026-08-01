@@ -6,14 +6,21 @@
  */
 
 // Auth guard - runs immediately, before DOM is ready, to bounce unauthenticated
-
+// visitors to the login page as fast as possible.
+if (window.TaxiDB && !window.TaxiDB.isLoggedIn()) {
+  window.location.href = 'owner-login.html';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!window.TaxiDB) {
     console.error('Database module (db.js) not found!');
     return;
   }
-  
+  if (!window.TaxiDB.isLoggedIn()) {
+    window.location.href = 'owner-login.html';
+    return;
+  }
+
   // Dashboard State
   let currentFilter = 'all';
   let lastKnownInquiryCount = 0;
@@ -452,6 +459,27 @@ document.addEventListener('DOMContentLoaded', () => {
           panel.classList.remove('active');
         }
       });
+
+      closeSidebar();
     });
   });
+
+  // Mobile Sidebar Toggle (off-canvas menu on phone)
+  const sidebar = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  function closeSidebar() {
+    if (sidebar) sidebar.classList.remove('open');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+  }
+
+  if (sidebarToggle && sidebar && sidebarOverlay) {
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      sidebarOverlay.classList.toggle('active');
+    });
+
+    sidebarOverlay.addEventListener('click', closeSidebar);
+  }
 });

@@ -117,6 +117,35 @@
   flex-wrap: wrap;
 }
 
+/* Hamburger button that opens the sidebar on phone - hidden on desktop/tablet */
+.sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Dark backdrop shown behind the sidebar when it's open on phone */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 99;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
 /* Notifications Bell Badge */
 .bell-notification {
   position: relative;
@@ -561,7 +590,48 @@ tr:hover td {
    RESPONSIVE - MOBILE (<=768px)
    ============================================ */
 @media (max-width: 768px) {
+  /* Off-canvas sidebar instead of the cramped 70px icon rail used at
+     tablet width - full sidebar slides in from the left when toggled. */
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    z-index: 200;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Undo the icon-only collapsing from the tablet breakpoint above -
+     the sidebar is full-width again, just hidden off-screen until opened */
+  .sidebar-header {
+    padding: 30px 24px;
+    text-align: left;
+  }
+
+  .sidebar-header .logo span,
+  .sidebar-header > span {
+    display: block;
+  }
+
+  .sidebar-item a span,
+  .sidebar-footer {
+    display: block;
+  }
+
+  .sidebar-item a {
+    justify-content: flex-start;
+    padding: 14px 18px;
+  }
+
+  .sidebar-toggle {
+    display: inline-flex;
+  }
+
   .main-content {
+    margin-left: 0;
     padding: 16px;
   }
 
@@ -571,6 +641,13 @@ tr:hover td {
 
   .dashboard-header p {
     font-size: 0.85rem;
+  }
+
+  .dashboard-header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
   }
 
   .header-actions {

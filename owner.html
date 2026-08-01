@@ -17,7 +17,7 @@
   <div class="dashboard-container">
     
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <a href="index.html" class="logo" style="font-size: 1.25rem;">
           <i class="fas fa-taxi" style="color: var(--accent);"></i> SILVER<span>TAXI</span>
@@ -40,14 +40,22 @@
       </div>
     </aside>
 
+    <!-- Dark backdrop behind the sidebar when it's open on phone -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
     <!-- Main Content Panel -->
     <main class="main-content">
       
       <!-- Top header -->
       <header class="dashboard-header" style="position:static; padding:0; background:none; border:none; backdrop-filter:none;">
-        <div>
-          <h1>Inquiry Hub</h1>
-          <p>Receive passenger requests, verify details, and call to confirm bookings.</p>
+        <div class="dashboard-header-top">
+          <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <h1>Inquiry Hub</h1>
+            <p>Receive passenger requests, verify details, and call to confirm bookings.</p>
+          </div>
         </div>
         <div class="header-actions">
           <!-- Notification chime bell -->
