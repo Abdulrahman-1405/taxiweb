@@ -1,0 +1,496 @@
+/* 
+  Customer Portal Stylesheet 
+  Simplified single-form inquiry layout for Chauffeur Fardeen Patel's Silver Camry.
+  Theme: Modern Premium White & Blue.
+*/
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 90vh;
+  padding: 120px 20px 80px;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(circle at top right, rgba(30, 64, 175, 0.06), transparent 45%),
+              linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 100%);
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 50px;
+  align-items: start;
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: 3.2rem;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.hero-content h1 span {
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 25px;
+  max-width: 550px;
+}
+
+.hero-badges {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.hero-badge i {
+  color: var(--primary);
+}
+
+/* Booking Widget Card */
+.booking-widget {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.booking-header h3 {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+}
+
+.booking-header h3 i {
+  color: var(--primary);
+}
+
+.booking-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(30, 64, 175, 0.08);
+  color: var(--primary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid #CBD5E1;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  transition: all 0.25s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(30, 64, 175, 0.1);
+  background: #FFFFFF;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.input-icon-wrapper .form-control {
+  padding-left: 42px;
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 35px;
+}
+
+/* Reusable 2-column form row (pickup time / passengers, contact name / email, etc.)
+   Kept as a class instead of inline styles so it can collapse on small screens. */
+.form-row-split {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-row-split .form-group {
+  margin-bottom: 0;
+}
+
+/* Success State Screen */
+.booking-success-screen {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.success-icon-container {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: var(--success);
+  font-size: 2.2rem;
+  animation: pulse-success 2s infinite;
+}
+
+@keyframes pulse-success {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3); }
+  70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.success-details {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 15px;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.success-details div {
+  margin-bottom: 8px;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.success-details strong {
+  color: var(--primary);
+}
+
+/* Services / About Camry Section */
+.services {
+  padding: 100px 20px;
+  background-color: var(--bg-deep);
+}
+
+.services-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Modifier for the 2-card "About My Camry" section (was an inline style,
+   moved here so the tablet/mobile media queries below can actually apply -
+   inline styles always beat stylesheet rules, which was blocking this from
+   collapsing to 1 column on phones). */
+.services-grid.camry-grid {
+  max-width: 900px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.service-card {
+  padding: 40px 30px;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+  background: #FFFFFF;
+}
+
+.service-icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  background: rgba(30, 64, 175, 0.06);
+  border: 1px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 25px;
+}
+
+.service-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--text-main);
+}
+
+.service-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Contact form styling */
+.contact-section {
+  padding: 100px 20px;
+  background: radial-gradient(circle at bottom left, rgba(30, 64, 175, 0.04), transparent 40%), #FFFFFF;
+}
+
+.contact-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 50px;
+}
+
+.contact-card {
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  background: #F8FAFC;
+}
+
+.contact-info-list {
+  list-style: none;
+  margin-top: 30px;
+}
+
+.contact-info-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.contact-info-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: var(--radius-md);
+  background: rgba(30, 64, 175, 0.06);
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contact-info-text h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.contact-info-text p,
+.contact-info-text a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.contact-info-text a:hover {
+  color: var(--primary);
+}
+
+/* Form alert styling */
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--success);
+  color: #065f46;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--danger);
+  color: #991b1b;
+}
+
+/* ============================================
+   RESPONSIVE - TABLET (<=992px)
+   ============================================ */
+@media (max-width: 992px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+  
+  .hero-content p {
+    margin: 0 auto 25px;
+  }
+  
+  .hero-badges {
+    justify-content: center;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .services-grid.camry-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (<=768px)
+   ============================================ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 16px 60px;
+    min-height: unset;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .booking-widget {
+    padding: 22px;
+  }
+
+  .form-row-split {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-row-split .form-group {
+    margin-bottom: 18px;
+  }
+
+  .services {
+    padding: 60px 16px;
+  }
+
+  .service-card {
+    padding: 30px 24px;
+  }
+
+  .contact-section {
+    padding: 60px 16px;
+  }
+
+  .contact-card {
+    padding: 28px 22px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL PHONES (<=480px)
+   ============================================ */
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-badge {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .booking-widget {
+    padding: 18px;
+  }
+
+  .booking-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .form-control {
+    padding: 11px 14px;
+  }
+
+  .input-icon-wrapper .form-control {
+    padding-left: 38px;
+  }
+
+  .success-details {
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book a premium Silver Toyota Camry taxi in Sydney directly with Chauffeur Fardeen Patel. Send an inquiry for instant confirmations and calls.">
+  <title>Silver Taxi | Book Direct with Chauffeur Fardeen Patel's Camry Sydney</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/customer.css">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Floating Mobile Quick Contact Actions -->
+  <div class="floating-actions">
+    <!-- Message Icon for SMS instead of WhatsApp -->
+    <a href="sms:+61420688705" id="float-sms-link" class="floating-btn btn-whatsapp" style="background-color: var(--accent);" title="SMS Text Message">
+      <i class="fas fa-comment-alt"></i>
+    </a>
+    <a href="tel:+61420688705" id="float-phone-link" class="floating-btn btn-phone" title="Call Me Directly">
+      <i class="fas fa-phone-alt"></i>
+    </a>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-taxi" style="color: var(--primary);"></i> SILVER<span>TAXI</span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="nav-mobile-panel" id="nav-mobile-panel">
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About My Camry</a></li>
+          <li><a href="#booking" class="nav-link">Send Inquiry</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+          <a href="tel:+61420688705" id="header-phone-btn" class="btn btn-secondary"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> Call Chauffeur</a>
+          <a href="owner.html" class="btn btn-outline" target="_blank"><i class="fas fa-user-lock"></i> Driver Login</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-container">
+      <!-- Left side copywriting & Camry Image -->
+      <div class="hero-content">
+        <div class="booking-badge" style="display: inline-block; margin-bottom: 15px; background: rgba(30, 64, 175, 0.08);">Personal Owner-Driver Service</div>
+        <h1>Chauffeur Fardeen Patel's <span>Silver Camry Taxi</span></h1>
+        <p>Reliable, clean, and professional point-to-point passenger transport across Sydney. Book directly with me for airport transfers, corporate commutes, and personal travel. Receive direct call confirmations.</p>
+        
+        <!-- Fardeen Patel's Silver Camry Image from the workspace -->
+        <div class="camry-image-container" style="margin-top: 25px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow); border: 1.5px solid var(--border-color);">
+          <img src="images/silver_camry.png" alt="Chauffeur Fardeen Patel's Silver Toyota Camry Taxi in Sydney" style="width: 100%; height: auto; display: block; object-fit: cover;">
+        </div>
+
+        <div class="hero-badges" style="margin-top: 30px;">
+          <div class="hero-badge">
+            <i class="fas fa-award"></i>
+            <span>Toyota Camry Hybrid</span>
+          </div>
+          <div class="hero-badge">
+            <i class="fas fa-user-clock"></i>
+            <span>Punctual Service</span>
+          </div>
+          <div class="hero-badge">
+            <i class="fas fa-check-circle"></i>
+            <span>Direct Connection</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side Booking Inquiry Form -->
+      <div id="booking" class="booking-widget glass">
+        <div class="booking-header">
+          <h3><i class="fas fa-envelope"></i> Send Booking Inquiry</h3>
+          <span class="booking-badge">Direct SMS Dispatch</span>
+        </div>
+
+        <form id="inquiry-submit-form">
+          <div class="form-group" style="background: rgba(30, 64, 175, 0.04); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+            <label style="margin-bottom:0; font-size:0.8rem; text-transform:none; color: var(--text-main); font-weight:700;">
+              <i class="fas fa-car" style="color:var(--primary); margin-right:5px;"></i> Vehicle: Premium Silver Toyota Camry (Sedan)
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="pickup-address">Pickup Address *</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-map-marker-alt"></i>
+              <input type="text" id="pickup-address" class="form-control" placeholder="Where should I pick you up?" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="drop-address">Destination Address *</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-map-marked-alt"></i>
+              <input type="text" id="drop-address" class="form-control" placeholder="Where are you heading?" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="form-row-split">
+            <div class="form-group">
+              <label for="pickup-time">Pickup Date & Time *</label>
+              <input type="datetime-local" id="pickup-time" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="passenger-count">Passengers *</label>
+              <select id="passenger-count" class="form-control">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers (Max)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-name">Your Full Name *</label>
+            <input type="text" id="customer-name" class="form-control" placeholder="Your Name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-phone">Contact Mobile Number *</label>
+            <input type="tel" id="customer-phone" class="form-control" placeholder="e.g. 0412 345 678" required>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-email">Email Address *</label>
+            <input type="email" id="customer-email" class="form-control" placeholder="Your email address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="special-instructions">Special Requests (Optional)</label>
+            <textarea id="special-instructions" rows="2" class="form-control" placeholder="Flight number, baby seat requests, or extra bags..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;"><i class="fas fa-paper-plane"></i> Send Booking Inquiry</button>
+        </form>
+
+        <!-- Success Screen -->
+        <div id="booking-success-screen" class="booking-success-screen" style="display: none;">
+          <div class="success-icon-container">
+            <i class="fas fa-check"></i>
+          </div>
+          <h3 style="color: var(--success); font-size: 1.6rem; margin-bottom: 15px;">Inquiry Sent Successfully</h3>
+          
+          <!-- Exact text confirmation required by user -->
+          <p style="color: var(--text-main); font-size: 1.05rem; margin-bottom: 20px; line-height: 1.6; background: rgba(30, 64, 175, 0.04); padding: 18px; border-radius: 8px; border-left: 4px solid var(--primary); text-align: left;">
+            Your booking request is sent. You will get called by <strong id="succ-phone" style="color: var(--primary); font-size: 1.1rem; white-space: nowrap;">+61 420688705</strong> and we will contact you.
+          </p>
+          
+          <div class="success-details">
+            <div><strong>Inquiry Reference:</strong> <strong id="succ-id" style="color:var(--primary);">INQ-XXXX</strong></div>
+            <div><strong>Pickup:</strong> <span id="succ-pickup">--</span></div>
+            <div><strong>Destination:</strong> <span id="succ-drop">--</span></div>
+            <div><strong>Date & Time:</strong> <span id="succ-time">--</span></div>
+          </div>
+
+          <button type="button" onclick="location.reload()" class="btn btn-secondary" style="width: 100%;"><i class="fas fa-redo"></i> Send Another Inquiry</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Camry / Fleet Section -->
+  <section id="about" class="services">
+    <div class="section-title">
+      <h2>My Toyota Camry <span>Silver Taxi</span></h2>
+      <p>I operate a modern Silver Toyota Camry Sedan providing high comfort, safety, and hybrid efficiency.</p>
+    </div>
+
+    <div class="services-grid camry-grid">
+      <div class="service-card glass">
+        <div class="service-icon-box">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>High Class Safety & Comfort</h3>
+        <p>Toyota Camry is renown for its top safety ratings and smooth ride quality. The interior is spacious with ample legroom for passengers and full climate control for a relaxing commute.</p>
+      </div>
+
+      <div class="service-card glass">
+        <div class="service-icon-box">
+          <i class="fas fa-luggage-cart"></i>
+        </div>
+        <h3>Boot Cargo Space</h3>
+        <p>Plenty of luggage capacity in the rear boot. It fits up to 2 large suitcases and 2 small carry-on bags comfortably. I will gladly assist with loading and unloading your bags.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-title">
+      <h2>Contact <span>Fardeen Patel</span></h2>
+      <p>Need general rates information or quick dispatch support? Send an inquiry and I will get back to you between rides.</p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Contact card info -->
+      <div class="contact-card glass">
+        <h3>Chauffeur Contact</h3>
+        <p style="color: var(--text-muted); margin-bottom: 25px;">Contact me directly via phone call or send an SMS message for quick inquiries.</p>
+        
+        <ul class="contact-info-list">
+          <li class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-info-text">
+              <h4>Direct Call</h4>
+              <p><a href="tel:+61420688705" class="contact-phone-val">+61 420688705</a></p>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-comment-alt"></i>
+            </div>
+            <div class="contact-info-text">
+              <h4>SMS Text Message</h4>
+              <p><a href="sms:+61420688705" class="contact-sms-val">+61 420688705</a></p>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-info-text">
+              <h4>Direct Email</h4>
+              <p><a href="mailto:fardeen.patel@prestigesilvertaxi.com.au" class="contact-email-val">fardeen.patel@prestigesilvertaxi.com.au</a></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Message Form -->
+      <div class="contact-card glass">
+        <h3>Quick Message Inquiry</h3>
+        <p style="color: var(--text-muted); margin-bottom: 25px;">I receive these notifications instantly on my driver dashboard.</p>
+        
+        <div id="contact-alert" class="alert"></div>
+
+        <form id="contact-inquiry-form">
+          <div class="form-row-split">
+            <input type="text" id="contact-name" class="form-control" placeholder="Name *" required>
+            <input type="email" id="contact-email" class="form-control" placeholder="Email *" required>
+          </div>
+          <div class="form-row-split">
+            <input type="tel" id="contact-phone" class="form-control" placeholder="Phone">
+            <input type="text" id="contact-subject" class="form-control" placeholder="Subject">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <textarea id="contact-message" rows="4" class="form-control" placeholder="Write message details..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" style="margin-bottom: 15px;">
+          <i class="fas fa-taxi" style="color: var(--accent);"></i> SILVER<span>TAXI</span>
+        </a>
+        <p>Premium point-to-point Silver Toyota Camry passenger transport in Sydney. Safe, clean, and always on time.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Links</h3>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">My Camry</a></li>
+          <li><a href="#booking">Inquiry Form</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Destinations</h3>
+        <ul class="footer-links">
+          <li><a href="#booking">Sydney Airport transfers</a></li>
+          <li><a href="#booking">Central Station runs</a></li>
+          <li><a href="#booking">Corporate CBD meetings</a></li>
+          <li><a href="#booking">Point to point transport</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <ul class="footer-contact-info">
+          <li><i class="fas fa-map-marker-alt"></i> Sydney NSW, Australia</li>
+          <li><i class="fas fa-phone-alt"></i> <span class="contact-phone-val">+61 420688705</span></li>
+          <li><i class="fas fa-envelope"></i> <span class="contact-email-val">fardeen.patel@prestigesilvertaxi.com</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Chauffeur Fardeen Patel. All Rights Reserved.</p>
+      <p>Driver Hub | <a href="owner.html" style="color:var(--accent); text-decoration:none;" target="_blank"><i class="fas fa-user-lock"></i> Driver Login</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/customer.js"></script>
+</body>
+</html>
