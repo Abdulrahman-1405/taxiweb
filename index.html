@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Book a premium Silver Toyota Camry taxi in Sydney directly with Chauffeur. Send an inquiry for instant confirmations and calls.">
-  <title>Silver Taxi | Book Direct with Chauffeur in Sydney</title>
+  <meta name="description" content="Book with Silver Cab Service Sydney directly with Chauffeur. Choose 4, 7 or 11 seater vehicles. Send an inquiry for instant confirmations and calls.">
+  <title>Silver Cab Service | Book Direct with Chauffeur in Sydney</title>
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <!-- Floating Mobile Quick Contact Actions -->
+  <!-- Floating Mobile Quick Contact Actions (right side) -->
   <div class="floating-actions">
     <!-- Message Icon for SMS instead of WhatsApp -->
     <a href="sms:+61420688705" id="float-sms-link" class="floating-btn btn-whatsapp" style="background-color: var(--accent);" title="SMS Text Message">
@@ -26,11 +26,18 @@
     </a>
   </div>
 
+  <!-- Floating Direct Email Action (left side) -->
+  <div class="floating-actions floating-actions-left">
+    <a href="mailto:booking@silvercabservices.com.au" id="float-email-link" class="floating-btn btn-email" title="Email Us Directly">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
   <!-- Navigation Bar -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <i class="fas fa-taxi" style="color: var(--primary);"></i> SILVER<span>TAXI</span>
+        <i class="fas fa-taxi" style="color: var(--primary);"></i> SILVER <span>CAB SERVICE</span>
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <i class="fas fa-bars"></i>
@@ -55,18 +62,18 @@
       <!-- Left side copywriting & Camry Image -->
       <div class="hero-content">
         <div class="booking-badge" style="display: inline-block; margin-bottom: 15px; background: rgba(30, 64, 175, 0.08);">Personal Owner-Driver Service</div>
-        <h1>Chauffeur service <span>Silver Taxi</span></h1>
-        <p>Reliable, clean, and professional point-to-point passenger transport across Sydney. Book directly with me for airport transfers, corporate commutes, and personal travel. Receive direct call confirmations.</p>
+        <h1>Chauffeur service <span>Silver Cab Service</span></h1>
+        <p>Reliable, clean, and professional point-to-point passenger transport across Sydney. Choose from 4, 7 or 11 seater vehicles. Book directly with me for airport transfers, corporate commutes, and personal travel. Receive direct call confirmations.</p>
         
-        <!--  Silver Camry Image from the workspace -->
+        <!--  Fleet Image from the workspace -->
         <div class="camry-image-container" style="margin-top: 25px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow); border: 1.5px solid var(--border-color);">
-          <img src="images/silver_camry.png" alt="Chauffeur service Silver Taxi in Sydney" style="width: 100%; height: auto; display: block; object-fit: cover;">
+          <img src="images/silver_camry.png" alt="Chauffeur service Silver Cab Service in Sydney" style="width: 100%; height: auto; display: block; object-fit: cover;">
         </div>
 
         <div class="hero-badges" style="margin-top: 30px;">
           <div class="hero-badge">
             <i class="fas fa-award"></i>
-            <span>Toyota Camry Hybrid</span>
+            <span>4 / 7 / 11 Seater Options</span>
           </div>
           <div class="hero-badge">
             <i class="fas fa-user-clock"></i>
@@ -87,10 +94,16 @@
         </div>
 
         <form id="inquiry-submit-form">
-          <div class="form-group" style="background: rgba(30, 64, 175, 0.04); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
-            <label style="margin-bottom:0; font-size:0.8rem; text-transform:none; color: var(--text-main); font-weight:700;">
-              <i class="fas fa-car" style="color:var(--primary); margin-right:5px;"></i> Vehicle: Premium Silver Toyota Camry (Sedan)
-            </label>
+          <div class="form-group">
+            <label for="vehicle-type">Select Vehicle *</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-car"></i>
+              <select id="vehicle-type" class="form-control" required>
+                <option value="4-seater">4 Seater (Sedan)</option>
+                <option value="7-seater">7 Seater (Maxi)</option>
+                <option value="11-seater">11 Seater (Maxi)</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
@@ -125,6 +138,23 @@
             </div>
           </div>
 
+          <div class="form-row-split">
+            <div class="form-group">
+              <label for="baby-seat">Baby Seat Required?</label>
+              <select id="baby-seat" class="form-control">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="wheelchair-access">Wheelchair Access?</label>
+              <select id="wheelchair-access" class="form-control">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="customer-name">Your Full Name *</label>
             <input type="text" id="customer-name" class="form-control" placeholder="Your Name" required>
@@ -132,7 +162,19 @@
 
           <div class="form-group">
             <label for="customer-phone">Contact Mobile Number *</label>
-            <input type="tel" id="customer-phone" class="form-control" placeholder="e.g. 0412 345 678" required>
+            <div class="phone-input-group">
+              <select id="phone-country-code" class="form-control phone-code-select" aria-label="Country code">
+                <option value="+61" selected>🇦🇺 +61</option>
+                <option value="+64">🇳🇿 +64</option>
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+86">🇨🇳 +86</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+971">🇦🇪 +971</option>
+              </select>
+              <input type="tel" id="customer-phone" class="form-control" placeholder="e.g. 412 345 678" required>
+            </div>
           </div>
 
           <div class="form-group">
@@ -142,7 +184,26 @@
 
           <div class="form-group">
             <label for="special-instructions">Special Requests (Optional)</label>
-            <textarea id="special-instructions" rows="2" class="form-control" placeholder="Flight number, baby seat requests, or extra bags..."></textarea>
+            <textarea id="special-instructions" rows="2" class="form-control" placeholder="Flight number, extra bags, or other notes..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-method">Payment Method *</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-credit-card"></i>
+              <select id="payment-method" class="form-control" required>
+                <option value="" disabled selected>Select payment method</option>
+                <option value="card">Credit / Debit Card</option>
+                <option value="gpay">Google Pay</option>
+                <option value="cabcharge">Cabcharge</option>
+                <option value="cash">Cash</option>
+              </select>
+            </div>
+            <div class="payment-icons-row" aria-hidden="true">
+              <span class="payment-icon-badge"><i class="fab fa-google-pay"></i> GPay</span>
+              <span class="payment-icon-badge"><i class="fas fa-id-card"></i> Cabcharge</span>
+              <span class="payment-icon-badge"><i class="far fa-credit-card"></i> Debit Card</span>
+            </div>
           </div>
 
           <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;"><i class="fas fa-paper-plane"></i> Send Booking Inquiry</button>
@@ -162,9 +223,11 @@
           
           <div class="success-details">
             <div><strong>Inquiry Reference:</strong> <strong id="succ-id" style="color:var(--primary);">INQ-XXXX</strong></div>
+            <div><strong>Vehicle:</strong> <span id="succ-vehicle">--</span></div>
             <div><strong>Pickup:</strong> <span id="succ-pickup">--</span></div>
             <div><strong>Destination:</strong> <span id="succ-drop">--</span></div>
             <div><strong>Date & Time:</strong> <span id="succ-time">--</span></div>
+            <div><strong>Payment:</strong> <span id="succ-payment">--</span></div>
           </div>
 
           <button type="button" onclick="location.reload()" class="btn btn-secondary" style="width: 100%;"><i class="fas fa-redo"></i> Send Another Inquiry</button>
@@ -176,25 +239,33 @@
   <!-- Camry / Fleet Section -->
   <section id="about" class="services">
     <div class="section-title">
-      <h2>My Toyota Camry <span>Silver Taxi</span></h2>
-      <p>I operate a modern Silver Toyota Camry Sedan providing high comfort, safety, and hybrid efficiency.</p>
+      <h2>Our Fleet <span>Silver Cab Service</span></h2>
+      <p>Choose the right vehicle for your trip: 4 seater sedan, 7 seater maxi, or 11 seater maxi — all clean, comfortable, and safety focused.</p>
     </div>
 
-    <div class="services-grid camry-grid">
+    <div class="services-grid">
       <div class="service-card glass">
         <div class="service-icon-box">
-          <i class="fas fa-shield-alt"></i>
+          <i class="fas fa-car"></i>
         </div>
-        <h3>High Class Safety & Comfort</h3>
-        <p>Toyota Camry is renown for its top safety ratings and smooth ride quality. The interior is spacious with ample legroom for passengers and full climate control for a relaxing commute.</p>
+        <h3>4 Seater Sedan</h3>
+        <p>A comfortable Toyota Camry Sedan with top safety ratings and a smooth ride. Spacious legroom and full climate control, ideal for solo travellers, couples, and small groups.</p>
       </div>
 
       <div class="service-card glass">
         <div class="service-icon-box">
-          <i class="fas fa-luggage-cart"></i>
+          <i class="fas fa-shuttle-van"></i>
         </div>
-        <h3>Boot Cargo Space</h3>
-        <p>Plenty of luggage capacity in the rear boot. It fits up to 2 large suitcases and 2 small carry-on bags comfortably. I will gladly assist with loading and unloading your bags.</p>
+        <h3>7 Seater Maxi</h3>
+        <p>Extra room for families and small groups with more luggage. Comfortable seating for up to 7 passengers with plenty of boot space for suitcases and bags.</p>
+      </div>
+
+      <div class="service-card glass">
+        <div class="service-icon-box">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>11 Seater Maxi</h3>
+        <p>Perfect for larger groups, corporate transfers, or events. Roomy interior and generous cargo capacity, with the same reliable, professional service every time.</p>
       </div>
     </div>
   </section>
@@ -202,7 +273,7 @@
   <!-- Contact Section -->
   <section id="contact" class="contact-section">
     <div class="section-title">
-      <h2>Contact <span>silvercabservices</span></h2>
+      <h2>Contact <span>Silver Cab Service</span></h2>
       <p>Need general rates information or quick dispatch support? Send an inquiry and I will get back to you between rides.</p>
     </div>
 
@@ -273,9 +344,9 @@
     <div class="footer-grid">
       <div class="footer-col">
         <a href="index.html" class="logo" style="margin-bottom: 15px;">
-          <i class="fas fa-taxi" style="color: var(--accent);"></i> SILVER<span>TAXI</span>
+          <i class="fas fa-taxi" style="color: var(--accent);"></i> SILVER <span>CAB SERVICE</span>
         </a>
-        <p>Premium point-to-point Silver Toyota Camry passenger transport in Sydney. Safe, clean, and always on time.</p>
+        <p>Premium point-to-point passenger transport in Sydney with 4, 7 and 11 seater vehicles. Safe, clean, and always on time.</p>
       </div>
       <div class="footer-col">
         <h3>Links</h3>
@@ -305,11 +376,13 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 silvercabservices. All Rights Reserved.</p>
+      <p>&copy; 2026 Silver Cab Service. All Rights Reserved.</p>
     </div>
   </footer>
 
   <!-- Scripts -->
+  <!-- Pickup/Destination address autocomplete is powered by Photon (photon.komoot.io),
+       a free, keyless OpenStreetMap-based service - no API key or billing needed. -->
   <script src="js/config.js"></script>
   <script src="js/db.js"></script>
   <script src="js/customer.js"></script>

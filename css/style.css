@@ -296,6 +296,17 @@ header.scrolled {
   z-index: 999;
 }
 
+/* Mirrors .floating-actions but pinned to the left side, for the direct email button */
+.floating-actions-left {
+  right: auto;
+  left: 30px;
+}
+
+.btn-email {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: var(--text-dark);
+}
+
 .floating-btn {
   width: 55px;
   height: 55px;
@@ -540,6 +551,11 @@ footer .logo span {
     bottom: 18px;
     right: 15px;
     gap: 12px;
+  }
+
+  .floating-actions-left {
+    right: auto;
+    left: 15px;
   }
 
   .floating-btn {

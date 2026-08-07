@@ -174,6 +174,100 @@ select.form-control {
   padding-right: 35px;
 }
 
+/* Address Autocomplete Dropdown (Photon / OpenStreetMap powered) */
+.address-autocomplete-wrapper {
+  position: relative;
+}
+
+.address-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.address-suggestions.hidden {
+  display: none;
+}
+
+.address-suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.address-suggestion-item i {
+  color: var(--primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.address-suggestion-item:hover,
+.address-suggestion-item.active {
+  background: rgba(30, 64, 175, 0.06);
+}
+
+/* Phone number field with country code selector */
+.phone-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.phone-code-select {
+  flex: 0 0 108px;
+  padding-left: 10px;
+  padding-right: 26px;
+}
+
+.phone-input-group .form-control:last-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Payment method icon badges - decorative, non-clickable */
+.payment-icons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.payment-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 6px 12px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.payment-icon-badge i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
 /* Reusable 2-column form row (pickup time / passengers, contact name / email, etc.)
    Kept as a class instead of inline styles so it can collapse on small screens. */
 .form-row-split {
@@ -246,15 +340,6 @@ select.form-control {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-}
-
-/* Modifier for the 2-card "About My Camry" section (was an inline style,
-   moved here so the tablet/mobile media queries below can actually apply -
-   inline styles always beat stylesheet rules, which was blocking this from
-   collapsing to 1 column on phones). */
-.services-grid.camry-grid {
-  max-width: 900px;
-  grid-template-columns: 1fr 1fr;
 }
 
 .service-card {
@@ -403,11 +488,6 @@ select.form-control {
     grid-template-columns: 1fr;
     max-width: 500px;
   }
-
-  .services-grid.camry-grid {
-    grid-template-columns: 1fr;
-    max-width: 500px;
-  }
   
   .contact-grid {
     grid-template-columns: 1fr;
@@ -492,5 +572,16 @@ select.form-control {
 
   .success-details {
     font-size: 0.85rem;
+  }
+
+  .phone-code-select {
+    flex: 0 0 92px;
+    padding-left: 8px;
+    padding-right: 22px;
+  }
+
+  .payment-icon-badge {
+    font-size: 0.75rem;
+    padding: 5px 10px;
   }
 }

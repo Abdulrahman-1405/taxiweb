@@ -1,7 +1,7 @@
 /**
  * Customer Booking Portal Logic
  * Handles inquiry submission and settings synchronization.
- * Custom built for Chauffeur Fardeen Patel's Silver Toyota Camry.
+ * Custom built for Silver Cab Service (fleet: 4 / 7 / 11 seater vehicles).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,10 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputDrop = document.getElementById('drop-address');
   const inputDatetime = document.getElementById('pickup-time');
   const selectPassengers = document.getElementById('passenger-count');
+  const selectVehicleType = document.getElementById('vehicle-type');
+  const selectBabySeat = document.getElementById('baby-seat');
+  const selectWheelchair = document.getElementById('wheelchair-access');
   const inputName = document.getElementById('customer-name');
+  const selectPhoneCode = document.getElementById('phone-country-code');
   const inputPhone = document.getElementById('customer-phone');
   const inputEmail = document.getElementById('customer-email');
   const inputNotes = document.getElementById('special-instructions');
+  const selectPaymentMethod = document.getElementById('payment-method');
 
   // Dynamically Sync Driver Contact Information from Settings
   const syncDriverContactInfo = async () => {
@@ -46,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const floatSmsLink = document.getElementById('float-sms-link');
     if (floatSmsLink) {
       floatSmsLink.href = settings.ownerSms;
+    }
+    const floatEmailLink = document.getElementById('float-email-link');
+    if (floatEmailLink) {
+      floatEmailLink.href = `mailto:${settings.ownerEmail}`;
     }
 
     // Contacts Section phone, SMS text message, and emails
@@ -81,6 +90,168 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initDateTime();
 
+  // Keep the "No. of Passengers" options in sync with the selected vehicle
+  const passengerCapacity = {
+    '4-seater': 4,
+    '7-seater': 7,
+    '11-seater': 11
+  };
+
+  const updatePassengerOptions = (vehicleValue) => {
+    if (!selectPassengers) return;
+    const max = passengerCapacity[vehicleValue] || 4;
+    const previousVal = parseInt(selectPassengers.value, 10) || 1;
+
+    selectPassengers.innerHTML = '';
+    for (let i = 1; i <= max; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = `${i} Passenger${i > 1 ? 's' : ''}${i === max ? ' (Max)' : ''}`;
+      selectPassengers.appendChild(opt);
+    }
+    // Keep the previous selection if it still fits the new vehicle, otherwise clamp to the new max
+    selectPassengers.value = Math.min(previousVal, max);
+  };
+
+  if (selectVehicleType) {
+    updatePassengerOptions(selectVehicleType.value);
+    selectVehicleType.addEventListener('change', () => updatePassengerOptions(selectVehicleType.value));
+  }
+
+  // Address Autocomplete (Pickup / Destination)
+  // Free, keyless autocomplete powered by Photon (photon.komoot.io), built on OpenStreetMap data.
+  // Results are biased toward Sydney and filtered to Australian addresses.
+  const SYDNEY_LAT = -33.8688;
+  const SYDNEY_LON = 151.2093;
+  const PHOTON_ENDPOINT = 'https://photon.komoot.io/api/';
+
+  const formatSuggestion = (props) => {
+    const parts = [];
+    if (props.housenumber && props.street) {
+      parts.push(`${props.housenumber} ${props.street}`);
+    } else if (props.street) {
+      parts.push(props.street);
+    } else if (props.name) {
+      parts.push(props.name);
+    }
+    if (props.city && props.name !== props.city) parts.push(props.city);
+    else if (props.district) parts.push(props.district);
+    if (props.state) parts.push(props.state);
+    if (props.postcode) parts.push(props.postcode);
+    return parts.filter(Boolean).join(', ') || props.name || '';
+  };
+
+  const setupAddressAutocomplete = (inputEl) => {
+    if (!inputEl) return;
+
+    // Wrap in a positioning container and build the suggestions dropdown
+    const wrapper = inputEl.closest('.input-icon-wrapper') || inputEl.parentElement;
+    wrapper.classList.add('address-autocomplete-wrapper');
+
+    const dropdown = document.createElement('ul');
+    dropdown.className = 'address-suggestions hidden';
+    wrapper.appendChild(dropdown);
+
+    let debounceTimer = null;
+    let currentController = null;
+    let activeIndex = -1;
+
+    const hideDropdown = () => {
+      dropdown.classList.add('hidden');
+      dropdown.innerHTML = '';
+      activeIndex = -1;
+    };
+
+    const renderSuggestions = (features) => {
+      dropdown.innerHTML = '';
+      if (!features.length) { hideDropdown(); return; }
+
+      features.forEach((feature) => {
+        const label = formatSuggestion(feature.properties || {});
+        if (!label) return;
+        const li = document.createElement('li');
+        li.className = 'address-suggestion-item';
+        li.innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${label}</span>`;
+        li.addEventListener('click', () => {
+          inputEl.value = label;
+          hideDropdown();
+          inputEl.focus();
+        });
+        dropdown.appendChild(li);
+      });
+
+      dropdown.classList.toggle('hidden', dropdown.children.length === 0);
+    };
+
+    const showError = (message) => {
+      dropdown.innerHTML = `<li class="address-suggestion-item address-suggestion-note">${message}</li>`;
+      dropdown.classList.remove('hidden');
+    };
+
+    const fetchSuggestions = async (query) => {
+      if (currentController) currentController.abort();
+      currentController = new AbortController();
+
+      const url = `${PHOTON_ENDPOINT}?q=${encodeURIComponent(query)}&lat=${SYDNEY_LAT}&lon=${SYDNEY_LON}&limit=8&lang=en`;
+
+      try {
+        const res = await fetch(url, { signal: currentController.signal, mode: 'cors' });
+        if (!res.ok) throw new Error(`Address lookup failed (HTTP ${res.status})`);
+        const data = await res.json();
+        const features = (data.features || []).filter((f) => {
+          const cc = f.properties && f.properties.countrycode;
+          return !cc || cc === 'AU';
+        });
+        renderSuggestions(features);
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.error('Address autocomplete error:', err);
+        showError('Live suggestions unavailable right now — you can still type the full address manually.');
+      }
+    };
+
+    inputEl.addEventListener('input', () => {
+      const query = inputEl.value.trim();
+      clearTimeout(debounceTimer);
+      if (query.length < 1) { hideDropdown(); return; }
+      debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
+    });
+
+    inputEl.addEventListener('keydown', (e) => {
+      const items = dropdown.querySelectorAll('.address-suggestion-item');
+      if (dropdown.classList.contains('hidden') || !items.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+      } else if (e.key === 'Enter') {
+        if (activeIndex >= 0) {
+          e.preventDefault();
+          items[activeIndex].click();
+        }
+        return;
+      } else if (e.key === 'Escape') {
+        hideDropdown();
+        return;
+      } else {
+        return;
+      }
+
+      items.forEach((item, idx) => item.classList.toggle('active', idx === activeIndex));
+      items[activeIndex].scrollIntoView({ block: 'nearest' });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!wrapper.contains(e.target)) hideDropdown();
+    });
+  };
+
+  setupAddressAutocomplete(inputPickup);
+  setupAddressAutocomplete(inputDrop);
+
   // Handle Form Submission
   if (inquiryForm) {
     inquiryForm.addEventListener('submit', async (e) => {
@@ -90,10 +261,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const dropVal = inputDrop.value.trim();
       const datetimeVal = inputDatetime.value;
       const passengerVal = parseInt(selectPassengers.value);
+      const vehicleVal = selectVehicleType ? selectVehicleType.value : '';
+      const babySeatVal = selectBabySeat ? selectBabySeat.value : 'no';
+      const wheelchairVal = selectWheelchair ? selectWheelchair.value : 'no';
       const nameVal = inputName.value.trim();
+      const phoneCodeVal = selectPhoneCode ? selectPhoneCode.value : '+61';
       const phoneVal = inputPhone.value.trim();
       const emailVal = inputEmail.value.trim();
       const notesVal = inputNotes.value.trim();
+      const paymentVal = selectPaymentMethod ? selectPaymentMethod.value : '';
 
       // Basic validations
       if (!pickupVal) { alert('Please enter a pickup address.'); inputPickup.focus(); return; }
@@ -114,15 +290,33 @@ document.addEventListener('DOMContentLoaded', () => {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailVal || !emailPattern.test(emailVal)) { alert('Please enter a valid email address.'); inputEmail.focus(); return; }
 
+      if (!paymentVal) { alert('Please select a payment method.'); selectPaymentMethod.focus(); return; }
+
+      const vehicleLabels = {
+        '4-seater': '4 Seater (Sedan)',
+        '7-seater': '7 Seater (Maxi)',
+        '11-seater': '11 Seater (Maxi)'
+      };
+      const paymentLabels = {
+        card: 'Credit / Debit Card',
+        gpay: 'Google Pay',
+        cabcharge: 'Cabcharge',
+        cash: 'Cash'
+      };
+
       const inquiryData = {
         pickup: pickupVal,
         destination: dropVal,
         datetime: datetimeVal,
         passengers: passengerVal,
+        vehicleType: vehicleVal,
+        babySeat: babySeatVal,
+        wheelchairAccess: wheelchairVal,
         customerName: nameVal,
-        phone: phoneVal,
+        phone: `${phoneCodeVal} ${phoneVal}`,
         email: emailVal,
-        notes: notesVal
+        notes: notesVal,
+        paymentMethod: paymentVal
       };
 
       if (!window.TaxiDB) {
@@ -149,8 +343,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show details in success card
         document.getElementById('succ-id').textContent = result.id;
+        document.getElementById('succ-vehicle').textContent = vehicleLabels[vehicleVal] || vehicleVal || '--';
         document.getElementById('succ-pickup').textContent = result.pickup;
         document.getElementById('succ-drop').textContent = result.destination;
+        document.getElementById('succ-payment').textContent = paymentLabels[paymentVal] || paymentVal || '--';
 
         const dateObj = new Date(result.datetime);
         document.getElementById('succ-time').textContent = dateObj.toLocaleDateString('en-AU', {
