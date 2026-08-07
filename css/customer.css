@@ -131,6 +131,9 @@
 
 .form-control {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
   background: var(--bg-input);
   border: 1px solid #CBD5E1;
   border-radius: var(--radius-md);
@@ -139,6 +142,14 @@
   color: var(--text-main);
   font-family: var(--font-body);
   transition: all 0.25s ease;
+}
+
+/* datetime-local's native picker UI has its own intrinsic minimum width
+   (especially on iOS Safari) which can push it past the input's box - clip
+   any overflow instead of letting it spill out of the card on small screens. */
+input[type="datetime-local"].form-control {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .form-control:focus {
@@ -172,55 +183,6 @@ select.form-control {
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 35px;
-}
-
-/* Address Autocomplete Dropdown (Photon / OpenStreetMap powered) */
-.address-autocomplete-wrapper {
-  position: relative;
-}
-
-.address-suggestions {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  right: 0;
-  z-index: 50;
-  list-style: none;
-  margin: 0;
-  padding: 6px;
-  background: #FFFFFF;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--card-shadow);
-  max-height: 260px;
-  overflow-y: auto;
-}
-
-.address-suggestions.hidden {
-  display: none;
-}
-
-.address-suggestion-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  color: var(--text-main);
-  cursor: pointer;
-  line-height: 1.4;
-}
-
-.address-suggestion-item i {
-  color: var(--primary);
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.address-suggestion-item:hover,
-.address-suggestion-item.active {
-  background: rgba(30, 64, 175, 0.06);
 }
 
 /* Phone number field with country code selector */
@@ -279,6 +241,7 @@ select.form-control {
 
 .form-row-split .form-group {
   margin-bottom: 0;
+  min-width: 0;
 }
 
 /* Success State Screen */
@@ -564,6 +527,10 @@ select.form-control {
 
   .form-control {
     padding: 11px 14px;
+  }
+
+  input[type="datetime-local"].form-control {
+    padding: 11px 8px;
   }
 
   .input-icon-wrapper .form-control {

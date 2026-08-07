@@ -6,7 +6,13 @@
 window.API_BASE_URL = 'https://backendtaxiweb.onrender.com/api';
 
 /**
- * Note: address autocomplete on the booking form (Pickup / Destination fields)
- * is powered by Photon (photon.komoot.io) - a free, keyless, OpenStreetMap-based
- * service. No API key or billing account is needed for it.
+ * Google Maps API key - powers the address autocomplete on the booking form
+ * (Pickup Address / Destination Address fields).
+ *
+ * 1. Go to https://console.cloud.google.com/google/maps-apis
+ * 2. Create/select a project, enable the "Places API" and "Maps JavaScript API"
+ * 3. Create an API key
+ * 4. Paste the key below. Once your domain is live, come back and restrict the
+ *    key to that domain under Credentials > Application restrictions.
  */
+window.GOOGLE_MAPS_API_KEY = 'AIzaSyA3Fa193c9wzaUPv1uT7m6aj7Kb5v_616I';

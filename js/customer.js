@@ -118,139 +118,48 @@ document.addEventListener('DOMContentLoaded', () => {
     selectVehicleType.addEventListener('change', () => updatePassengerOptions(selectVehicleType.value));
   }
 
-  // Address Autocomplete (Pickup / Destination)
-  // Free, keyless autocomplete powered by Photon (photon.komoot.io), built on OpenStreetMap data.
-  // Results are biased toward Sydney and filtered to Australian addresses.
-  const SYDNEY_LAT = -33.8688;
-  const SYDNEY_LON = 151.2093;
-  const PHOTON_ENDPOINT = 'https://photon.komoot.io/api/';
+  // Google-powered Address Autocomplete (Pickup / Destination)
+  // Requires window.GOOGLE_MAPS_API_KEY to be set in js/config.js
+  const initAddressAutocomplete = () => {
+    if (!window.google || !window.google.maps || !window.google.maps.places) return;
 
-  const formatSuggestion = (props) => {
-    const parts = [];
-    if (props.housenumber && props.street) {
-      parts.push(`${props.housenumber} ${props.street}`);
-    } else if (props.street) {
-      parts.push(props.street);
-    } else if (props.name) {
-      parts.push(props.name);
+    // Bias results to the greater Sydney metro area (still allows other AU results, just ranked lower)
+    const sydneyBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(-34.1183, 150.5209), // SW - roughly Camden/Campbelltown
+      new google.maps.LatLng(-33.4245, 151.3430)  // NE - roughly Palm Beach
+    );
+
+    const autocompleteOptions = {
+      componentRestrictions: { country: 'au' },
+      bounds: sydneyBounds,
+      strictBounds: false,
+      fields: ['formatted_address', 'geometry', 'name']
+    };
+
+    if (inputPickup) new google.maps.places.Autocomplete(inputPickup, autocompleteOptions);
+    if (inputDrop) new google.maps.places.Autocomplete(inputDrop, autocompleteOptions);
+  };
+
+  const loadGooglePlacesScript = () => {
+    if (window.google && window.google.maps && window.google.maps.places) {
+      initAddressAutocomplete();
+      return;
     }
-    if (props.city && props.name !== props.city) parts.push(props.city);
-    else if (props.district) parts.push(props.district);
-    if (props.state) parts.push(props.state);
-    if (props.postcode) parts.push(props.postcode);
-    return parts.filter(Boolean).join(', ') || props.name || '';
+    if (!window.GOOGLE_MAPS_API_KEY) {
+      // No key configured yet - address fields will work as plain text inputs.
+      console.warn('Address autocomplete disabled: set window.GOOGLE_MAPS_API_KEY in js/config.js to enable it.');
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${window.GOOGLE_MAPS_API_KEY}&libraries=places&region=AU&language=en-AU`;
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => console.error('Failed to load Google Maps script. Check that GOOGLE_MAPS_API_KEY is valid and Places API is enabled for it.');
+    script.onload = initAddressAutocomplete;
+    document.head.appendChild(script);
   };
 
-  const setupAddressAutocomplete = (inputEl) => {
-    if (!inputEl) return;
-
-    // Wrap in a positioning container and build the suggestions dropdown
-    const wrapper = inputEl.closest('.input-icon-wrapper') || inputEl.parentElement;
-    wrapper.classList.add('address-autocomplete-wrapper');
-
-    const dropdown = document.createElement('ul');
-    dropdown.className = 'address-suggestions hidden';
-    wrapper.appendChild(dropdown);
-
-    let debounceTimer = null;
-    let currentController = null;
-    let activeIndex = -1;
-
-    const hideDropdown = () => {
-      dropdown.classList.add('hidden');
-      dropdown.innerHTML = '';
-      activeIndex = -1;
-    };
-
-    const renderSuggestions = (features) => {
-      dropdown.innerHTML = '';
-      if (!features.length) { hideDropdown(); return; }
-
-      features.forEach((feature) => {
-        const label = formatSuggestion(feature.properties || {});
-        if (!label) return;
-        const li = document.createElement('li');
-        li.className = 'address-suggestion-item';
-        li.innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${label}</span>`;
-        li.addEventListener('click', () => {
-          inputEl.value = label;
-          hideDropdown();
-          inputEl.focus();
-        });
-        dropdown.appendChild(li);
-      });
-
-      dropdown.classList.toggle('hidden', dropdown.children.length === 0);
-    };
-
-    const showError = (message) => {
-      dropdown.innerHTML = `<li class="address-suggestion-item address-suggestion-note">${message}</li>`;
-      dropdown.classList.remove('hidden');
-    };
-
-    const fetchSuggestions = async (query) => {
-      if (currentController) currentController.abort();
-      currentController = new AbortController();
-
-      const url = `${PHOTON_ENDPOINT}?q=${encodeURIComponent(query)}&lat=${SYDNEY_LAT}&lon=${SYDNEY_LON}&limit=8&lang=en`;
-
-      try {
-        const res = await fetch(url, { signal: currentController.signal, mode: 'cors' });
-        if (!res.ok) throw new Error(`Address lookup failed (HTTP ${res.status})`);
-        const data = await res.json();
-        const features = (data.features || []).filter((f) => {
-          const cc = f.properties && f.properties.countrycode;
-          return !cc || cc === 'AU';
-        });
-        renderSuggestions(features);
-      } catch (err) {
-        if (err.name === 'AbortError') return;
-        console.error('Address autocomplete error:', err);
-        showError('Live suggestions unavailable right now — you can still type the full address manually.');
-      }
-    };
-
-    inputEl.addEventListener('input', () => {
-      const query = inputEl.value.trim();
-      clearTimeout(debounceTimer);
-      if (query.length < 1) { hideDropdown(); return; }
-      debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
-    });
-
-    inputEl.addEventListener('keydown', (e) => {
-      const items = dropdown.querySelectorAll('.address-suggestion-item');
-      if (dropdown.classList.contains('hidden') || !items.length) return;
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        activeIndex = Math.min(activeIndex + 1, items.length - 1);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        activeIndex = Math.max(activeIndex - 1, 0);
-      } else if (e.key === 'Enter') {
-        if (activeIndex >= 0) {
-          e.preventDefault();
-          items[activeIndex].click();
-        }
-        return;
-      } else if (e.key === 'Escape') {
-        hideDropdown();
-        return;
-      } else {
-        return;
-      }
-
-      items.forEach((item, idx) => item.classList.toggle('active', idx === activeIndex));
-      items[activeIndex].scrollIntoView({ block: 'nearest' });
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!wrapper.contains(e.target)) hideDropdown();
-    });
-  };
-
-  setupAddressAutocomplete(inputPickup);
-  setupAddressAutocomplete(inputDrop);
+  loadGooglePlacesScript();
 
   // Handle Form Submission
   if (inquiryForm) {
@@ -299,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       const paymentLabels = {
         card: 'Credit / Debit Card',
-        gpay: 'Google Pay',
         cabcharge: 'Cabcharge',
         cash: 'Cash'
       };

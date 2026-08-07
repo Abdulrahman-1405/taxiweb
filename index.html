@@ -45,7 +45,7 @@
       <div class="nav-mobile-panel" id="nav-mobile-panel">
         <ul class="nav-menu">
           <li><a href="#home" class="nav-link">Home</a></li>
-          <li><a href="#about" class="nav-link">About My Camry</a></li>
+          <li><a href="#about" class="nav-link">Our vehicles</a></li>
           <li><a href="#booking" class="nav-link">Send Inquiry</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
@@ -61,8 +61,8 @@
     <div class="hero-container">
       <!-- Left side copywriting & Camry Image -->
       <div class="hero-content">
-        <div class="booking-badge" style="display: inline-block; margin-bottom: 15px; background: rgba(30, 64, 175, 0.08);">Personal Owner-Driver Service</div>
-        <h1>Chauffeur service <span>Silver Cab Service</span></h1>
+        <div class="booking-badge" style="display: inline-block; margin-bottom: 15px; background: rgba(30, 64, 175, 0.08);">TAXI/CAB SERVICE</div>
+        <h1><span>Silver Cab Service</span></h1>
         <p>Reliable, clean, and professional point-to-point passenger transport across Sydney. Choose from 4, 7 or 11 seater vehicles. Book directly with me for airport transfers, corporate commutes, and personal travel. Receive direct call confirmations.</p>
         
         <!--  Fleet Image from the workspace -->
@@ -194,13 +194,11 @@
               <select id="payment-method" class="form-control" required>
                 <option value="" disabled selected>Select payment method</option>
                 <option value="card">Credit / Debit Card</option>
-                <option value="gpay">Google Pay</option>
                 <option value="cabcharge">Cabcharge</option>
                 <option value="cash">Cash</option>
               </select>
             </div>
             <div class="payment-icons-row" aria-hidden="true">
-              <span class="payment-icon-badge"><i class="fab fa-google-pay"></i> GPay</span>
               <span class="payment-icon-badge"><i class="fas fa-id-card"></i> Cabcharge</span>
               <span class="payment-icon-badge"><i class="far fa-credit-card"></i> Debit Card</span>
             </div>
@@ -381,8 +379,8 @@
   </footer>
 
   <!-- Scripts -->
-  <!-- Pickup/Destination address autocomplete is powered by Photon (photon.komoot.io),
-       a free, keyless OpenStreetMap-based service - no API key or billing needed. -->
+  <!-- Pickup/Destination address autocomplete is powered by Google Places.
+       Set window.GOOGLE_MAPS_API_KEY in js/config.js to enable it. -->
   <script src="js/config.js"></script>
   <script src="js/db.js"></script>
   <script src="js/customer.js"></script>
