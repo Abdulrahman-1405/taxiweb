@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Keep the "No. of Passengers" options in sync with the selected vehicle
   const passengerCapacity = {
     '4-seater': 4,
+    '4-wagon': 4,
     '7-seater': 7,
     '11-seater': 11
   };
@@ -203,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const vehicleLabels = {
         '4-seater': '4 Seater (Sedan)',
+        '4-wagon': '4 Seater (Wagon)',
         '7-seater': '7 Seater (Maxi)',
         '11-seater': '11 Seater (Maxi)'
       };
